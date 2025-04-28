@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bright Light ATS Checker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,21 +13,21 @@
     <input type="file" id="fileInput" accept=".pdf,.docx">
     <button onclick="analyzeCV()">Analyze CV</button>
 
-    <div class="result">
-      <h2>Score: <span id="score">0%</span></h2>
-      <div class="problems">
-        <h3>Problems Detected:</h3>
-        <ul id="problemsList"></ul>
-      </div>
-      <div class="solutions">
-        <h3>Solutions to Improve:</h3>
-        <ul id="solutionsList"></ul>
-      </div>
+    <div class="progress-bar">
+      <div id="progress" style="width: 0%">0%</div>
     </div>
 
+    <div class="analysis">
+      <h2>Problems Detected:</h2>
+      <ul id="problemsList"></ul>
+
+      <h2>Solutions:</h2>
+      <ul id="solutionsList"></ul>
+    </div>
   </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
 <script src="app.js"></script>
+
 </body>
 </html>
