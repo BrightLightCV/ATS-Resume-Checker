@@ -1,33 +1,92 @@
-function checkResume() {
+function analyzeCV() {
   const fileInput = document.getElementById('fileInput');
-  const scoreDiv = document.getElementById('score');
-  const scoreSection = document.getElementById('scoreSection');
-  const feedbackDiv = document.getElementById('feedback');
-
-  if (fileInput.files.length === 0) {
-    alert('Please upload your resume file!');
+  const file = fileInput.files[0];
+  
+  if (!file) {
+    alert('Please upload a file.');
     return;
   }
 
-  const file = fileInput.files[0];
-  let score = 0;
-  let feedback = '';
+  const problems = [];
+  const solutions = [];
+  let score = 100;
 
-  const allowedTypes = {
-    'application/pdf': 70,
-    'application/msword': 85, // .doc
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 95 // .docx
-  };
-
-  if (allowedTypes[file.type]) {
-    score = allowedTypes[file.type];
-    feedback = 'Good job! Try to optimize keywords for better ATS results.';
+  // Check file type
+  if (file.type === "application/pdf") {
+    score = 70;
+  } else if (file.name.endsWith(".docx")) {
+    score = 95;
   } else {
-    score = 40;
-    feedback = 'Unsupported file type for ATS systems. Please upload PDF, DOC, or DOCX.';
+    alert('Unsupported file type.');
+    return;
   }
 
-  scoreSection.style.display = 'block';
-  scoreDiv.textContent = `${score}%`;
-  feedbackDiv.textContent = feedback;
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const arrayBuffer = event.target.result;
+
+    if (file.name.endsWith(".docx")) {
+      mammoth.extractRawText({ arrayBuffer: arrayBuffer })
+        .then(function(result) {
+          processText(result.value);
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    } else {
+      processText(""); // PDF placeholder
+    }
+  };
+  
+  reader.readAsArrayBuffer(file);
+
+  function processText(text) {
+    // 1. Check for images
+    if (text.includes("Graphic") || text.includes("Image")) {
+      problems.push("Contains images.");
+      solutions.push("Remove all images from your CV.");
+      score -= 10;
+    }
+
+    // 2. Check for symbols
+    const symbolRegex = /[^\w\s.,'-]/g;
+    if (symbolRegex.test(text)) {
+      problems.push("Contains special symbols.");
+      solutions.push("Remove unnecessary special characters.");
+      score -= 5;
+    }
+
+    // 3. Check if keywords exist
+    const keywords = ["experience", "skills", "education", "certifications", "projects"];
+    let foundKeywords = 0;
+    keywords.forEach(keyword => {
+      if (text.toLowerCase().includes(keyword)) {
+        foundKeywords++;
+      }
+    });
+    if (foundKeywords < 3) {
+      problems.push("Missing important keywords.");
+      solutions.push("Add sections like Experience, Skills, Education, Projects.");
+      score -= 15;
+    }
+
+    // Display results
+    document.getElementById('score').innerText = score + "%";
+    
+    const problemsList = document.getElementById('problemsList');
+    problemsList.innerHTML = "";
+    problems.forEach(problem => {
+      const li = document.createElement('li');
+      li.innerText = problem;
+      problemsList.appendChild(li);
+    });
+
+    const solutionsList = document.getElementById('solutionsList');
+    solutionsList.innerHTML = "";
+    solutions.forEach(solution => {
+      const li = document.createElement('li');
+      li.innerText = solution;
+      solutionsList.appendChild(li);
+    });
+  }
 }
