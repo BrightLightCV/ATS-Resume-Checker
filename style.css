@@ -1,18 +1,19 @@
 body {
   margin: 0;
+  padding: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(to right, #00c6ff, #0072ff);
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
   height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .container {
   background: white;
   padding: 30px;
   border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
   width: 400px;
 }
@@ -24,27 +25,39 @@ input[type="file"] {
 button {
   background-color: #0072ff;
   color: white;
+  padding: 10px 20px;
   border: none;
-  padding: 12px 20px;
-  border-radius: 10px;
-  cursor: pointer;
+  border-radius: 8px;
   font-size: 16px;
+  cursor: pointer;
 }
 
 button:hover {
   background-color: #005ec2;
 }
 
-.result {
-  margin-top: 20px;
+.progress-bar {
+  width: 100%;
+  background-color: #eee;
+  border-radius: 10px;
+  margin: 20px 0;
+  overflow: hidden;
 }
 
-.problems, .solutions {
-  margin-top: 15px;
+#progress {
+  background-color: #00c6ff;
+  color: white;
+  text-align: center;
+  height: 30px;
+  line-height: 30px;
+  transition: width 0.5s;
+}
+
+.analysis {
   text-align: left;
 }
 
-.problems ul, .solutions ul {
+.analysis ul {
   list-style-type: disc;
   margin-left: 20px;
 }
