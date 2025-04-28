@@ -2,27 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bright Light - ATS Resume Checker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bright Light ATS Checker</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div class="container">
-    <h1>Bright Light</h1>
-    <p>Check your resume's ATS compatibility!</p>
+    <h1>Bright Light ATS Checker</h1>
+    <input type="file" id="fileInput" accept=".pdf,.docx">
+    <button onclick="analyzeCV()">Analyze CV</button>
 
-    <input type="file" id="fileInput" accept=".pdf,.doc,.docx">
-    <button onclick="checkResume()">Analyze Resume</button>
-
-    <div id="scoreSection" style="display:none;">
-      <h2>Compatibility Score:</h2>
-      <div id="score">0%</div>
+    <div class="result">
+      <h2>Score: <span id="score">0%</span></h2>
+      <div class="problems">
+        <h3>Problems Detected:</h3>
+        <ul id="problemsList"></ul>
+      </div>
+      <div class="solutions">
+        <h3>Solutions to Improve:</h3>
+        <ul id="solutionsList"></ul>
+      </div>
     </div>
 
-    <div id="feedback"></div>
   </div>
 
-  <script src="app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
