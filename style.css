@@ -1,6 +1,6 @@
 body {
   font-family: 'Roboto', sans-serif;
-  background: #f0f2f5;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,11 +11,11 @@ body {
 .container {
   background: #fff;
   padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
   text-align: center;
   width: 90%;
-  max-width: 500px;
+  max-width: 400px;
 }
 
 h1 {
@@ -24,24 +24,26 @@ h1 {
 }
 
 input[type="file"] {
-  margin-bottom: 20px;
+  margin: 15px 0;
 }
 
 button {
-  background-color: #4CAF50;
+  background-color: #2575fc;
   color: white;
   border: none;
   padding: 12px 24px;
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  transition: background 0.3s ease;
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #6a11cb;
 }
 
 #result {
   margin-top: 20px;
   font-weight: bold;
+  color: #333;
 }
