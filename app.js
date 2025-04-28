@@ -1,20 +1,33 @@
 function checkResume() {
   const fileInput = document.getElementById('fileInput');
-  const resultDiv = document.getElementById('result');
+  const scoreDiv = document.getElementById('score');
+  const scoreSection = document.getElementById('scoreSection');
+  const feedbackDiv = document.getElementById('feedback');
 
   if (fileInput.files.length === 0) {
-    resultDiv.innerHTML = 'Please upload a file first.';
+    alert('Please upload your resume file!');
     return;
   }
 
   const file = fileInput.files[0];
-  const allowedTypes = ['application/pdf', 
-                        'application/msword', 
-                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+  let score = 0;
+  let feedback = '';
 
-  if (allowedTypes.includes(file.type)) {
-    resultDiv.innerHTML = '✅ Your resume format is compatible with ATS.';
+  const allowedTypes = {
+    'application/pdf': 70,
+    'application/msword': 85, // .doc
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 95 // .docx
+  };
+
+  if (allowedTypes[file.type]) {
+    score = allowedTypes[file.type];
+    feedback = 'Good job! Try to optimize keywords for better ATS results.';
   } else {
-    resultDiv.innerHTML = '❌ Unsupported file type. Please upload a PDF, DOC, or DOCX file.';
+    score = 40;
+    feedback = 'Unsupported file type for ATS systems. Please upload PDF, DOC, or DOCX.';
   }
+
+  scoreSection.style.display = 'block';
+  scoreDiv.textContent = `${score}%`;
+  feedbackDiv.textContent = feedback;
 }
